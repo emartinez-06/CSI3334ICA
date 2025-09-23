@@ -40,12 +40,49 @@ class BST {
             delete toRemove;
         }
         // Exercise 2: Removing a node with one child
-        else if (/* condition: toRemove has one child */) {
-            // TODO: handle one-child removal
+        else if (toRemove->left == nullptr || toRemove->right == nullptr) {
+            // remove is on left of parent
+            toRemove->left == nullptr ? parent->left = toRemove->right
+                                      : parent->left = toRemove->left;
+            // remove is on the right of parent
+            toRemove->left == nullptr ? parent->right = toRemove->right
+                                      : parent->right = toRemove->left;
+
+            // for both
+            toRemove->left = toRemove->right = nullptr;
+            delete toRemove;
+
         }
         // Exercise 3: Removing a node with two children
         else {
-            // TODO: handle two-children removal
+            BSTNode<T> *lm = nullptr;
+            BSTNode<T> *curr = parent;
+            BSTNode<T> *prev = nullptr;
+
+            while (lm != nullptr) {
+                curr = curr->right;
+                if (curr == nullptr) {
+                    lm = prev->left;
+                    // back track one node then sets lm and break the loop
+                }
+                prev = curr;
+            }
+
+            if (lm->right != nullptr) {
+                // promote child to the children of r
+            } else {
+                // lm point to children of r
+            }
+
+            // remove is on left of parent
+            toRemove->left == nullptr ? parent->left = toRemove->right
+                                      : parent->left = toRemove->left;
+            // remove is on the right of parent
+            toRemove->left == nullptr ? parent->right = toRemove->right
+                                      : parent->right = toRemove->left;
+
+            toRemove->left = toRemove->right = nullptr;
+            delete toRemove;
         }
     }
 
