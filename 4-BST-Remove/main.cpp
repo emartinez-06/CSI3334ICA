@@ -40,15 +40,21 @@ class BST {
             cout << "Value not found.\n";
             return;
         }
-
         // Exercise 1: Removing a leaf node
         if (toRemove->left == nullptr && toRemove->right == nullptr) {
-            parent->left == nullptr ? parent->right = nullptr
-                                    : parent->left = nullptr;
+            if (parent->left == toRemove) {
+                parent->left = nullptr;
+            } else {
+                parent->right = nullptr;
+            }
+
+            //           parent->left == nullptr ? parent->right = nullptr
+            //                                 : parent->left = nullptr;
             delete toRemove;
         }
         // Exercise 2: Removing a node with one child
         else if (toRemove->left == nullptr || toRemove->right == nullptr) {
+            /*
             // remove is on left of parent
             toRemove->left == nullptr ? parent->left = toRemove->right
                                       : parent->left = toRemove->left;
@@ -58,39 +64,40 @@ class BST {
 
             // for both
             toRemove->left = toRemove->right = nullptr;
+            */
+            BSTNode<T> *child =
+                (toRemove->left != nullptr) ? toRemove->left : toRemove->right;
+
+            if (parent->left == toRemove) {
+                parent->left = child;
+            } else {
+                parent->right = child;
+            }
             delete toRemove;
 
         }
         // Exercise 3: Removing a node with two children
         else {
-            BSTNode<T> *lm = nullptr;
-            BSTNode<T> *curr = parent;
-            BSTNode<T> *prev = nullptr;
+            // Find leftmost node of right subtree (inorder successor)
+            BSTNode<T> *leftMostParent = toRemove;
+            BSTNode<T> *leftMost = toRemove->right;
 
-            while (lm != nullptr) {
-                curr = curr->right;
-                if (curr == nullptr) {
-                    lm = prev->left;
-                    // back track one node then sets lm and break the loop
-                }
-                prev = curr;
+            while (leftMost->left != nullptr) {
+                leftMostParent = leftMost;
+                leftMost = leftMost->left;
             }
 
-            if (lm->right != nullptr) {
-                // promote child to the children of r
+            // Copy successor's data into toRemove
+            toRemove->data = leftMost->data;
+
+            // Fix links
+            if (leftMostParent->left == leftMost) {
+                leftMostParent->left = leftMost->right;
             } else {
-                // lm point to children of r
+                leftMostParent->right = leftMost->right;
             }
 
-            // remove is on left of parent
-            toRemove->left == nullptr ? parent->left = toRemove->right
-                                      : parent->left = toRemove->left;
-            // remove is on the right of parent
-            toRemove->left == nullptr ? parent->right = toRemove->right
-                                      : parent->right = toRemove->left;
-
-            toRemove->left = toRemove->right = nullptr;
-            delete toRemove;
+            delete leftMost;
         }
     }
 
@@ -138,7 +145,7 @@ int main() {
     // TODO: Test removals
     tree.remove(20); // Leaf case
     tree.remove(30); // One child case
-    // tree.remove(50); // Two children case
+    tree.remove(50); // Two children case
 
     cout << "Inorder after removal: ";
     tree.inorder();
