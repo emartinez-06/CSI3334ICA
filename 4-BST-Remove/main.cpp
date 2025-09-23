@@ -21,7 +21,6 @@ class BST {
     // Basic insert (for testing)
     void insert(T val) { root = insertHelper(root, val); }
 
-    // TODO: Implement remove (three cases)
     void remove(T val) {
         // Locate parent and toRemove
         BSTNode<T> *parent = nullptr;
@@ -35,8 +34,10 @@ class BST {
         }
 
         // Exercise 1: Removing a leaf node
-        if (/* condition: toRemove is a leaf */) {
-            // TODO: handle leaf node removal
+        if (toRemove->left == nullptr && toRemove->right == nullptr) {
+            parent->left == nullptr ? parent->right = nullptr
+                                    : parent->left = nullptr;
+            delete toRemove;
         }
         // Exercise 2: Removing a node with one child
         else if (/* condition: toRemove has one child */) {
