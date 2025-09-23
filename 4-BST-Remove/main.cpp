@@ -26,7 +26,15 @@ class BST {
         BSTNode<T> *parent = nullptr;
         BSTNode<T> *toRemove = root;
 
-        // TODO: code to find parent and toRemove here
+        // iterate tree until toRemove found
+        while (toRemove && toRemove->data != val) {
+            parent = toRemove;
+            if (val < toRemove->data) {
+                toRemove = toRemove->left;
+            } else {
+                toRemove = toRemove->right;
+            }
+        }
 
         if (!toRemove) {
             cout << "Value not found.\n";
@@ -128,8 +136,8 @@ int main() {
     tree.inorder();
 
     // TODO: Test removals
-    // tree.remove(20); // Leaf case
-    // tree.remove(30); // One child case
+    tree.remove(20); // Leaf case
+    tree.remove(30); // One child case
     // tree.remove(50); // Two children case
 
     cout << "Inorder after removal: ";
