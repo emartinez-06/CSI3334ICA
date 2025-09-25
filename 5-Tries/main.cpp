@@ -70,7 +70,13 @@ class TrieNode {
  * Return value: none
  */
 void TrieNode::insert(string const &word, int position) {
-    // FILL IN CODE HERE
+    // Not robust but just checks if our position ndx is equal to the position
+    // ndx of the last letter in word, simple and hopefully works base-case
+    if (position == word.length()) {
+        return;
+    }
+    if (children[word[position]]) {
+    }
 }
 
 /* find() recursively searches for the given word and returns true if it is in
@@ -80,7 +86,7 @@ void TrieNode::insert(string const &word, int position) {
  *  1. Base case: We've reached the recursion base case when we've reached the
  *     end of the word. Did we find a word in the trie or not?
  *  2. Non-base case: We are currently looking at word[position]. Does this node
- *     have a child for that letter?
+ *     have a child for that letter
  *      - If so, continue the search in that child, by recursing.
  *      - If not, then is the word in the tree?
  *
