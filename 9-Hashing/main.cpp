@@ -9,10 +9,13 @@ struct DefaultIntHash {
     int operator()(int x) const { return x; }
 };
 
-// Uncomment this and make your own hash function that behaves better for this
-// program
-// struct YourIntHash { int operator()(int x) const { return /* fill in here */;
-// } };
+struct YourIntHash {
+    int operator()(int x) const {
+        int output;
+        output = x % 769;
+        return output;
+    }
+};
 
 // hash table with a default hash function type
 template <typename T, typename Hash>
@@ -21,7 +24,11 @@ class HashTable {
     HashTable(int size) : table(size), numItems(0) {}
 
     void insert(T const &item) {
-        // fill in here
+        Hash x;
+        list<T> keys;
+
+        keys.push_back(item);
+        table.at(x(item)) = keys;
     }
 
     void remove(T const &item) {
@@ -38,7 +45,7 @@ class HashTable {
         }
     }
 
-    double loadFactor() const { return /* fill in here */; }
+    double loadFactor() const { return (double)numItems / table.size(); }
 
    private:
     vector<list<T>> table;
