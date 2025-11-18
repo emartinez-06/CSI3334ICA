@@ -27,10 +27,10 @@ using namespace std;
 
 class AdjacencyMatrixGraph {
    public:
-    AdjacencyMatrixGraph(int num_vertices) {
+    AdjacencyMatrixGraph(int num_vertices)
         // initialize adj_matrix
-        adj_matrix(num_vertices, vector<bool>(num_vertices, false));
-    }
+        : adj_matrix(num_vertices, vector<bool>(num_vertices, false)) {};
+
     void add_edge(int u, int v) {
         // add a directed edge from u to v
         adj_matrix[u][v] = true;
@@ -74,24 +74,23 @@ class AdjacencyMatrixGraph {
 
 class AdjacencyListGraph {
    public:
-    AdjacencyListGraph(int num_vertices) {
-        // init adj_list
-    }
+    AdjacencyListGraph(int num_vertices) : adj_list(num_vertices) {};
+    // init adj_list
+
     void add_edge(int u, int v) {
-        // add a directed edge from u to v
-        adj_list[u].push_back(v);
+        // dont want to re add!
+        if (!edge_exists(u, v)) {
+            // add a directed edge from u to v
+            adj_list[u].push_back(v);
+        }
     }
     bool edge_exists(int u, int v) const {
         // return true if there is an edge from u to v
+        auto iterator = find(adj_list[u].begin(), adj_list[u].end(), v);
+        return iterator != adj_list[u].end();
     }
     void print_edges(int u) const {
         // from vertex u
-        for (int i = 0; i < adj_list[u].size(); ++i) {
-            for (int x : adj_list[u].at(i)) {
-                cout << x << " ";
-            }
-        }
-        cout << endl;
     }
     void print_edges() const {
         // from all vertices
