@@ -27,13 +27,46 @@ using namespace std;
 
 class AdjacencyMatrixGraph {
    public:
-    AdjacencyMatrixGraph(int num_vertices); // initialize adj_matrix
-    void add_edge(int u, int v);            // add a directed edge from u to v
-    bool edge_exists(
-        int u, int v) const; // return true if there is an edge from u to v
-    void print_edges(int u) const; // from vertex u
-    void print_edges() const;      // from all vertices
-    int count_all_edges() const;   // in the entire graph
+    AdjacencyMatrixGraph(int num_vertices) {
+        // initialize adj_matrix
+        adj_matrix(num_vertices, vector<bool>(num_vertices, false));
+    }
+    void add_edge(int u, int v) {
+        // add a directed edge from u to v
+        adj_matrix[u][v] = true;
+    }
+    bool edge_exists(int u, int v) const {
+        // return true if there is an edge from u to v
+        return adj_matrix[u][v];
+    }
+    void print_edges(int u) const {
+        // from vertex u
+        for (int v = 0; v < adj_matrix.size(); ++v) {
+            if (edge_exists(u, v)) {
+                cout << u << " ->" << v << endl;
+            }
+        }
+    }
+    void print_edges() const {
+        // from all vertices
+        for (int u = 0; u < adj_matrix.size(); u++) {
+            print_edges(u);
+        }
+    }
+    int count_all_edges() const {
+        // in the entire graph
+        int count = 0;
+
+        for (int u = 0; u < adj_matrix.size(); u++) {
+            for (int v = 0; v < adj_matrix.size(); v++) {
+                if (edge_exists(u, v)) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
    private:
     vector<vector<bool> > adj_matrix; // a VxV matrix
     // adj_matrix[u][v] is true if there is an edge u -> v
@@ -41,16 +74,37 @@ class AdjacencyMatrixGraph {
 
 class AdjacencyListGraph {
    public:
-    AdjacencyListGraph(int num_vertices); // initialize adj_list
-    void add_edge(int u, int v);          // add a directed edge from u to v
-    bool edge_exists(
-        int u, int v) const; // return true if there is an edge from u to v
-    void print_edges(int u) const; // from vertex u
-    void print_edges() const;      // from all vertices
-    int count_all_edges() const;   // in the entire graph
+    AdjacencyListGraph(int num_vertices) {
+        // init adj_list
+    }
+    void add_edge(int u, int v) {
+        // add a directed edge from u to v
+        adj_list[u].push_back(v);
+    }
+    bool edge_exists(int u, int v) const {
+        // return true if there is an edge from u to v
+    }
+    void print_edges(int u) const {
+        // from vertex u
+        for (int i = 0; i < adj_list[u].size(); ++i) {
+            for (int x : adj_list[u].at(i)) {
+                cout << x << " ";
+            }
+        }
+        cout << endl;
+    }
+    void print_edges() const {
+        // from all vertices
+    }
+    int count_all_edges() const {
+        // in the entire graph
+    }
+
    private:
-    vector<list<int> > adj_list; // a vector of V lists
-    // adj_list[u] is a list with the destinations of all edges leaving vertex u
+    // a vector of V lists
+    vector<list<int> > adj_list;
+    // adj_list[u] is a list with the destinations of all edges leaving
+    // vertex u
 };
 
 int main() {
