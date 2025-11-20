@@ -91,12 +91,23 @@ class AdjacencyListGraph {
     }
     void print_edges(int u) const {
         // from vertex u
+        for (auto i = adj_list[u].begin(); i != adj_list[u].end(); ++i) {
+            cout << u << "->" << *i << endl;
+        }
     }
     void print_edges() const {
         // from all vertices
+        for (int u = 0; adj_list.size(); u++) {
+            print_edges(u);
+        }
     }
     int count_all_edges() const {
         // in the entire graph
+        int count = 0;
+        for (int u = 0; adj_list.size(); u++) {
+            count += adj_list[u].size();
+        }
+        return count;
     }
 
    private:
